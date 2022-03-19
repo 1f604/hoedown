@@ -107,9 +107,6 @@ const char *hoedown_buffer_cstr(hoedown_buffer *buf);
 /* hoedown_buffer_printf: formatted printing to a buffer */
 void hoedown_buffer_printf(hoedown_buffer *buf, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
-/* hoedown_buffer_put_utf8: put a Unicode character encoded as UTF-8 */
-void hoedown_buffer_put_utf8(hoedown_buffer *buf, unsigned int codepoint);
-
 /* hoedown_buffer_free: free the buffer */
 void hoedown_buffer_free(hoedown_buffer *buf);
 

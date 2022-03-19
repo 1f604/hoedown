@@ -272,37 +272,3 @@ hoedown_buffer_printf(hoedown_buffer *buf, const char *fmt, ...)
 
 	buf->size += n;
 }
-
-void hoedown_buffer_put_utf8(hoedown_buffer *buf, unsigned int c) {
-	unsigned char unichar[4];
-
-	assert(buf && buf->unit);
-
-	if (c < 0x80) {
-		hoedown_buffer_putc(buf, c);
-	}
-	else if (c < 0x800) {
-		unichar[0] = 192 + (c / 64);
-		unichar[1] = 128 + (c % 64);
-		hoedown_buffer_put(buf, unichar, 2);
-	}
-	else if (c - 0xd800u < 0x800) {
-		HOEDOWN_BUFPUTSL(buf, "\xef\xbf\xbd");
-	}
-	else if (c < 0x10000) {
-		unichar[0] = 224 + (c / 4096);
-		unichar[1] = 128 + (c / 64) % 64;
-		unichar[2] = 128 + (c % 64);
-		hoedown_buffer_put(buf, unichar, 3);
-	}
-	else if (c < 0x110000) {
-		unichar[0] = 240 + (c / 262144);
-		unichar[1] = 128 + (c / 4096) % 64;
-		unichar[2] = 128 + (c / 64) % 64;
-		unichar[3] = 128 + (c % 64);
-		hoedown_buffer_put(buf, unichar, 4);
-	}
-	else {
-		HOEDOWN_BUFPUTSL(buf, "\xef\xbf\xbd");
-	}
-}
